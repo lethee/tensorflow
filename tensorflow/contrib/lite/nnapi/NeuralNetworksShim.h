@@ -42,8 +42,7 @@ inline void* loadLibrary(const char* name) {
 }
 
 inline void* getLibraryHandle() {
-  static void* handle = loadLibrary("libneuralnetworks.so");
-  return handle;
+  return nullptr;
 }
 
 inline void* loadFunction(const char* name) {
