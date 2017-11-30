@@ -28,11 +28,11 @@ GENDIR := $(MAKEFILE_DIR)/gen/obj/
 
 # Settings for the host compiler.
 CXX := $(CC_PREFIX) gcc
-CXXFLAGS := --std=c++11 -O3 -DNDEBUG
+CXXFLAGS := --std=c++11 -O3 -DNDEBUG -DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK
 CC := $(CC_PREFIX) gcc
 CFLAGS :=
 LDOPTS :=
-LDOPTS += -L/usr/local/lib
+LDOPTS += -L/usr/local/lib -ldl
 ARFLAGS := -r
 
 INCLUDES := \
@@ -53,6 +53,7 @@ LIBS := \
 -lstdc++ \
 -lpthread \
 -lm \
+-ldl \
 -lz
 
 # If we're on Linux, also link in the dl library.
