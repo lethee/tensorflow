@@ -26,6 +26,8 @@ limitations under the License.
 #include "tensorflow/contrib/lite/string_util.h"
 #include "tensorflow/contrib/lite/tools/mutable_op_resolver.h"
 
+using namespace std;
+
 #ifdef TFLITE_CUSTOM_OPS_HEADER
 void RegisterSelectedOps(::tflite::MutableOpResolver* resolver);
 #endif
@@ -45,11 +47,11 @@ void InitImpl(const std::string& graph, const std::vector<int>& sizes,
 
   model = tflite::FlatBufferModel::BuildFromFile(graph.c_str());
   if (!model) {
-    LOG(FATAL) << "Failed to mmap model " << graph;
+    LOG(FATAL) << "Failed to mmap model " << graph << endl;
   }
-  LOG(INFO) << "Loaded model " << graph;
+  LOG(INFO) << "Loaded model " << graph << endl;
   model->error_reporter();
-  LOG(INFO) << "resolved reporter";
+  LOG(INFO) << "resolved reporter" << endl;
 
 #ifdef TFLITE_CUSTOM_OPS_HEADER
   tflite::MutableOpResolver resolver;
@@ -60,7 +62,7 @@ void InitImpl(const std::string& graph, const std::vector<int>& sizes,
 
   tflite::InterpreterBuilder(*model, resolver)(&interpreter);
   if (!interpreter) {
-    LOG(FATAL) << "Failed to construct interpreter";
+    LOG(FATAL) << "Failed to construct interpreter" << endl;
   }
 
   if (num_threads != -1) {
@@ -70,16 +72,19 @@ void InitImpl(const std::string& graph, const std::vector<int>& sizes,
   int input = interpreter->inputs()[0];
 
   if (input_layer_type != "string") {
-    interpreter->ResizeInputTensor(input, sizes);
+    interpreter->ResizeInputTensor(input, sizes); // allocate 224 x 224 x 3
   }
 
   if (interpreter->AllocateTensors() != kTfLiteOk) {
-    LOG(FATAL) << "Failed to allocate tensors!";
+    LOG(FATAL) << "Failed to allocate tensors!" << endl;
   }
+  
+  std::cout << "--- end ---" << std::endl;
 }
 
 int Main(int argc, char** argv) {
-  InitImpl("", {}, "", 1);
+  InitImpl("tensorflow/contrib/lite/downloads/models/models/mobilenet_v1_1.0_224.tflite", 
+           {1, 224, 224, 3}, "float", 1);
   return 0;
 }
 
