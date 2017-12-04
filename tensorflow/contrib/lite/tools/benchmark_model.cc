@@ -206,7 +206,7 @@ void InitImpl(const std::string& graph, const std::vector<int>& sizes,
 }
 
 int Main(int argc, char** argv) {
-  InitImpl("tensorflow/contrib/lite/downloads/models/models/mobilenet_v1_1.0_224.tflite", 
+  InitImpl("mobilenet_v1_1.0_224.tflite",
            {1, 224, 224, 3}, "float", 1);
   return 0;
 }

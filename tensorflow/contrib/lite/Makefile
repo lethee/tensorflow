@@ -27,9 +27,9 @@ LIBDIR := $(MAKEFILE_DIR)/gen/lib/
 GENDIR := $(MAKEFILE_DIR)/gen/obj/
 
 # Settings for the host compiler.
-CXX := $(CC_PREFIX) gcc
-CXXFLAGS := --std=c++11 -O3 -DNDEBUG -DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK
-CC := $(CC_PREFIX) gcc
+CXX := $(CC_PREFIX) arm-linux-gnueabi-gcc-5
+CXXFLAGS := --std=c++11 -O3 -DNDEBUG -DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK -march=armv7-a -mthumb -mfpu=neon -mfloat-abi=softfp -mcpu=cortex-a9 -mtune=cortex-a9 -funwind-tables -rdynamic -O2 -feliminate-unused-debug-types -fvisibility-inlines-hidden -Wall -s
+CC := $(CC_PREFIX) arm-linux-gnueabi-gcc-5
 CFLAGS :=
 LDOPTS :=
 LDOPTS += -L/usr/local/lib -ldl
@@ -53,8 +53,7 @@ LIBS := \
 -lstdc++ \
 -lpthread \
 -lm \
--ldl \
--lz
+-ldl
 
 # If we're on Linux, also link in the dl library.
 ifeq ($(OS),LINUX)
