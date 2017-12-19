@@ -170,7 +170,7 @@ class ShapeUtil {
   // As above, but for program shapes, returns a string for the form:
   //
   // (param_name: f32[42x12], ...) -> f32[24x42]
-  static string HumanString(const ProgramShape& shape);
+  static string HumanString(const ProgramShape& program_shape);
 
   // Parses a ShapeUtil::HumanString-format shape string back into a shape
   // object.
@@ -350,6 +350,10 @@ class ShapeUtil {
   // Slices tuple elements in the range [start, limit) and returns a new tuple
   // shape. E.g. a tuple like (f32, s32, u32) would slice via 1,3 to (s32, u32).
   static Shape SliceTuple(const Shape& tuple, int64 start, int64 limit);
+
+  // Returns the shape of the real/imaginary components of the given complex
+  // shape.
+  static Shape ComplexComponentShape(const Shape& complex_shape);
 
   // Shorthand for testing whether a shape is of a given element type and
   // sequence of dimensions.
