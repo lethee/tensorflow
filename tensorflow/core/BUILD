@@ -1424,7 +1424,7 @@ LIB_INTERNAL_PUBLIC_HEADERS = tf_additional_lib_hdrs() + [
 
 # Replicated for lib_internal and lib_internal_impl.
 LIB_INTERNAL_DEFINES = (tf_additional_lib_defines() + [
-                            "TF_USE_SNAPPY",
+                            "TF_USE_SNAPPY", "GEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK",
                         ] + tf_additional_verbs_lib_defines() +
                         tf_additional_mpi_lib_defines() +
                         tf_additional_gdr_lib_defines())
